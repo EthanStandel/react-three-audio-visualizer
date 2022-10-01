@@ -29,7 +29,7 @@ export const SongPanel = () => {
         ))}
       </SongPanelContainer>
       <IconButton
-        style={{ position: "absolute", top: 16, right: 16 }}
+        css={{ position: "absolute", top: 16, right: 16 }}
         size="big"
         onClick={() => setHide(hide => !hide)}
       >
@@ -40,16 +40,18 @@ export const SongPanel = () => {
 };
 
 const SongPanelContainer = styled("div", {
-  width: "min(400px, 100%)",
+  position: "absolute",
+  width: "min(500px, 100%)",
   height: "100%",
   background: "var(--plt-crd)",
-  position: "relative",
-  left: 0,
-  transition: "left var(--animate-time) ease",
+  right: 0,
+  top: 0,
+  transform: "translateX(0)",
+  transition: "transform var(--animate-time) ease",
   variants: {
     hide: {
       true: {
-        left: 400,
+        transform: "translateX(500px)",
       },
     },
   },

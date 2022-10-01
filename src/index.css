@@ -32,4 +32,5 @@ html, body {
   background-color: var(--plt-bg);
   color: var(--plt-txt);
   margin: 0;
+  overflow: hidden;
 }

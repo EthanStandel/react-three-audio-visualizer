@@ -22,7 +22,6 @@ const Main = styled("main", {
   flexDirection: "column",
 });
 const ListAndVisualizerBox = styled("div", {
-  display: "flex",
   flexGrow: 1,
   overflow: "hidden",
 });

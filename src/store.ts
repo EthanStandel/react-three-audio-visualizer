@@ -9,6 +9,13 @@ type Store = {
   fetchSongs: () => Promise<void>;
   setCurrentSongIndex: (index: number) => void;
   setPlaying: (playing: boolean) => void;
+  audio?: {
+    context: AudioContext;
+    source: MediaElementAudioSourceNode;
+    analyzer: AnalyserNode;
+    frequencyDataBuffer: Uint8Array;
+  };
+  setAudio: (audio: Store["audio"]) => void;
 };
 
 export const useStore = create<Store>((set, get) => ({
@@ -31,6 +38,9 @@ export const useStore = create<Store>((set, get) => ({
     }
 
     set({ currentSongIndex, playing: true });
+  },
+  setAudio: (audio: Store["audio"]) => {
+    set({ audio });
   },
   setPlaying: playing => {
     const { currentSongIndex } = get();

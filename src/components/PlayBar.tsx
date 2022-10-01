@@ -24,8 +24,15 @@ export const PlayBar = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [duration, setDuration] = useState("--:--");
   const [place, setPlace] = useState("00:00");
-  const { currentSongIndex, setCurrentSongIndex, songs, playing, setPlaying } =
-    useStore();
+  const {
+    currentSongIndex,
+    setCurrentSongIndex,
+    songs,
+    playing,
+    setPlaying,
+    setAudio,
+    audio,
+  } = useStore();
   const song =
     typeof currentSongIndex === "number" ? songs[currentSongIndex] : undefined;
 
@@ -123,6 +130,20 @@ export const PlayBar = () => {
           const minutesPrint = minutes.toString().padStart(2, "0");
           const secondsPrint = seconds.toString().padStart(2, "0");
           setDuration(`${minutesPrint}:${secondsPrint}`);
+          if (!audio) {
+            const context = new AudioContext();
+            const source = context.createMediaElementSource(
+              event.currentTarget
+            );
+            const analyzer = context.createAnalyser();
+            analyzer.connect(context.destination);
+            analyzer.fftSize = 256;
+            const frequencyDataBuffer = new Uint8Array(
+              analyzer.frequencyBinCount
+            );
+            source.connect(analyzer);
+            setAudio({ context, source, analyzer, frequencyDataBuffer });
+          }
         }}
         src={song?.uri ?? ""}
       />
