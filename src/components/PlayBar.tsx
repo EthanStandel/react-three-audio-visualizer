@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { styled } from "@stitches/react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { GiNextButton, GiPreviousButton } from "react-icons/gi";
+import { GoMarkGithub } from "react-icons/go";
 
 import { useAnimationFrame } from "../hooks/useAnimationFrame";
 import { useStore } from "../store";
@@ -77,6 +78,7 @@ export const PlayBar = () => {
       <SeekBar audioRef={audioRef} />
       <IconButton
         disabled={!song}
+        aria-label="previous track"
         onDoubleClick={() => prevTrack()}
         onClick={() => {
           const audio = audioRef.current;
@@ -88,18 +90,27 @@ export const PlayBar = () => {
         <GiPreviousButton size={16} />
       </IconButton>
       <IconButton
+        aria-label="play / pause"
         size="big"
         disabled={!song}
         onClick={() => setPlaying(!playing)}
       >
         {playing ? <FaPause size={24} /> : <FaPlay size={24} />}
       </IconButton>
-      <IconButton disabled={!song} onClick={() => nextTrack()}>
+      <IconButton
+        disabled={!song}
+        onClick={() => nextTrack()}
+        aria-label="next track"
+      >
         <GiNextButton size={16} />
       </IconButton>
       <Duration>
         {place} / {duration}
       </Duration>
+      <Title>
+        <strong>{song?.song ?? ""}</strong>
+        <span>{song ? "by " + song.artist : ""}</span>
+      </Title>
       <audio
         ref={audioRef}
         onPause={event => setPlaying(!event.currentTarget.paused)}
@@ -114,6 +125,12 @@ export const PlayBar = () => {
         }}
         src={song?.uri ?? ""}
       />
+      <GithubLink
+        aria-label="github link"
+        href="https://github.com/EthanStandel/react-three-audio-visualizer"
+      >
+        <GoMarkGithub size={36} />
+      </GithubLink>
     </PlayBarContainer>
   );
 };
@@ -129,6 +146,17 @@ const PlayBarContainer = styled("div", {
 
 const Duration = styled("p", {
   padding: "1em",
+});
+
+const Title = styled("p", {
+  padding: "1em",
+  flexGrow: 1,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  "> strong": {
+    marginRight: ".5em",
+  },
 });
 
 const IconButton = styled("button", {
@@ -174,4 +202,18 @@ const IconButton = styled("button", {
       },
     },
   },
+});
+
+const GithubLink = styled("a", {
+  all: "unset",
+  cursor: "pointer",
+  height: 48,
+  width: 48,
+  borderRadius: 24,
+  marginRight: 24,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  background: "var(--plt-bg)",
+  justifySelf: "flex-end",
 });
