@@ -37,9 +37,19 @@ export const PlayBar = () => {
     typeof currentSongIndex === "number" ? songs[currentSongIndex] : undefined;
 
   useEffect(() => {
-    const audio = audioRef.current;
-    if (audio && song?.uri) {
-      audio.play();
+    const audioEl = audioRef.current;
+    if (audioEl && song?.uri) {
+      if (!audio) {
+        const context = new AudioContext();
+        const source = context.createMediaElementSource(audioEl);
+        const analyzer = context.createAnalyser();
+        analyzer.connect(context.destination);
+        analyzer.fftSize = 256;
+        const frequencyDataBuffer = new Uint8Array(analyzer.frequencyBinCount);
+        source.connect(analyzer);
+        setAudio({ context, source, analyzer, frequencyDataBuffer });
+      }
+      audioEl.play();
     }
   }, [song?.uri]);
 
@@ -130,20 +140,6 @@ export const PlayBar = () => {
           const minutesPrint = minutes.toString().padStart(2, "0");
           const secondsPrint = seconds.toString().padStart(2, "0");
           setDuration(`${minutesPrint}:${secondsPrint}`);
-          if (!audio) {
-            const context = new AudioContext();
-            const source = context.createMediaElementSource(
-              event.currentTarget
-            );
-            const analyzer = context.createAnalyser();
-            analyzer.connect(context.destination);
-            analyzer.fftSize = 256;
-            const frequencyDataBuffer = new Uint8Array(
-              analyzer.frequencyBinCount
-            );
-            source.connect(analyzer);
-            setAudio({ context, source, analyzer, frequencyDataBuffer });
-          }
         }}
         src={song?.uri ?? ""}
       />
