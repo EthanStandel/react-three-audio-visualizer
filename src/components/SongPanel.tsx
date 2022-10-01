@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 import { styled } from "@stitches/react";
 import { FaPlayCircle } from "react-icons/fa";
@@ -11,6 +11,12 @@ import { IconButton } from "./IconButton";
 export const SongPanel = () => {
   const [hide, setHide] = useState(false);
   const { songs, setCurrentSongIndex, currentSongIndex } = useStore();
+
+  useEffect(() => {
+    if (typeof currentSongIndex === "number") {
+      setHide(true);
+    }
+  }, [currentSongIndex]);
 
   return (
     <>
