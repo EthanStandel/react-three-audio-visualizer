@@ -1,13 +1,14 @@
 import { useEffect, useRef, useState } from "react";
 
-import { styled } from "@stitches/react";
 import { FaPlay, FaPause } from "react-icons/fa";
 import { GiNextButton, GiPreviousButton } from "react-icons/gi";
 import { GoMarkGithub } from "react-icons/go";
 
 import { useAnimationFrame } from "../hooks/useAnimationFrame";
 import { useStore } from "../store";
+import { styled } from "../style";
 
+import { IconButton } from "./IconButton";
 import { SeekBar } from "./SeekBar";
 
 const printTime = (timeInSeconds: number) => {
@@ -146,6 +147,9 @@ const PlayBarContainer = styled("div", {
 
 const Duration = styled("p", {
   padding: "1em",
+  "@mobile": {
+    flexGrow: 1,
+  },
 });
 
 const Title = styled("p", {
@@ -157,50 +161,8 @@ const Title = styled("p", {
   "> strong": {
     marginRight: ".5em",
   },
-});
-
-const IconButton = styled("button", {
-  all: "unset",
-  cursor: "pointer",
-  display: "flex",
-  justifyContent: "center",
-  alignItems: "center",
-  marginLeft: 24,
-  borderRadius: 24,
-  height: 36,
-  width: 36,
-  opacity: 1,
-  outlineOffset: 4,
-  outline: "3px solid transparent",
-  background: "var(--plt-prmy)",
-  transition: "all var(--animate-time) ease",
-  "> *": {
-    transition: "transform var(--animate-time) ease",
-  },
-  "&:focus-visible": {
-    outline: "3px solid var(--plt-prmy)",
-  },
-  "&:focus-visible, &:active": {
-    "> *": {
-      transform: "scale(1.5)",
-    },
-  },
-  "&:active": {
-    "> *": {
-      transform: "scale(.7)",
-    },
-  },
-  "&[disabled]": {
-    background: "var(--plt-dsbld)",
-    opacity: 0.5,
-  },
-  variants: {
-    size: {
-      big: {
-        height: 48,
-        width: 48,
-      },
-    },
+  "@mobile": {
+    display: "none",
   },
 });
 
@@ -210,7 +172,7 @@ const GithubLink = styled("a", {
   height: 48,
   width: 48,
   borderRadius: 24,
-  marginRight: 24,
+  marginRight: 16,
   display: "flex",
   alignItems: "center",
   justifyContent: "center",

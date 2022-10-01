@@ -9,6 +9,12 @@ html {
   --animate-time: .2s;
 }
 
+@media (prefers-reduced-motion) {
+  html {
+    --animate-time: 0s;
+  }
+}
+
 @media (prefers-color-scheme: dark) {
   html {
     --plt-bg: #20201c;

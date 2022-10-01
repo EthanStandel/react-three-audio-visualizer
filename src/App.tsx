@@ -1,4 +1,4 @@
-import { css, styled } from "@stitches/react";
+import { styled } from "@stitches/react";
 
 import { PlayBar } from "./components/PlayBar";
 import { SongPanel } from "./components/SongPanel";
@@ -24,4 +24,5 @@ const Main = styled("main", {
 const ListAndVisualizerBox = styled("div", {
   display: "flex",
   flexGrow: 1,
+  overflow: "hidden",
 });
