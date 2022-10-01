@@ -16,8 +16,8 @@ export const App = () => (
 
 const Main = styled("main", {
   width: "100vw",
-  maxHeight: "100vh",
-  height: "100vh",
+  maxHeight: "calc(var(--vh, 1vh) * 100)",
+  height: "calc(var(--vh, 1vh) * 100)",
   display: "flex",
   flexDirection: "column",
 });
