@@ -2,13 +2,15 @@ import create from "zustand";
 
 import { Song, SongList } from "./models/song";
 
-type Store = {
+export type Store = {
   songs: Array<Song>;
   currentSongIndex?: number;
   playing: boolean;
   fetchSongs: () => Promise<void>;
   setCurrentSongIndex: (index: number) => void;
   setPlaying: (playing: boolean) => void;
+  visualizer: "expansion-ring" | "bloat-ring";
+  setVisualizer: (visualizer: Store["visualizer"]) => void;
   audio?: {
     context: AudioContext;
     source: MediaElementAudioSourceNode;
@@ -22,6 +24,10 @@ export const useStore = create<Store>((set, get) => ({
   songs: [],
   currentSongIndex: undefined,
   playing: false,
+  visualizer: "expansion-ring",
+  setVisualizer: (visualizer: Store["visualizer"]) => {
+    set({ visualizer });
+  },
   fetchSongs: async () => {
     const response = await fetch("/content-manifest.json");
     if (!response.ok) {

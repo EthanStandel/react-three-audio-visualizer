@@ -8,3 +8,4 @@ An audio visualizer using `@react-three/fiber` with a full music player wrapping
 - **Bundler**: [Vite](https://vitejs.dev/)
 - **Deployment**: [Vercel](https://vercel.com)
 - **Styling**: [Stitches](https://stitches.dev/)
+- **State management**: [Zustand](https://github.com/pmndrs/zustand)

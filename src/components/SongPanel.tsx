@@ -35,7 +35,7 @@ export const SongPanel = () => {
         ))}
       </SongPanelContainer>
       <IconButton
-        css={{ position: "absolute", top: 16, right: 16 }}
+        css={{ position: "absolute", top: 16, right: 16, zIndex: 2 }}
         size="big"
         onClick={() => setHide(hide => !hide)}
       >
@@ -47,6 +47,7 @@ export const SongPanel = () => {
 
 const SongPanelContainer = styled("div", {
   position: "absolute",
+  zIndex: 1,
   width: "min(500px, 100%)",
   height: "100%",
   background: "var(--plt-crd)",

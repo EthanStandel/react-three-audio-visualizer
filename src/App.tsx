@@ -3,6 +3,7 @@ import { styled } from "@stitches/react";
 import { PlayBar } from "./components/PlayBar";
 import { SongPanel } from "./components/SongPanel";
 import { VisualOutput } from "./components/VisualOutput";
+import { VisualizerSelection } from "./components/VisualizerSelection";
 
 export const App = () => (
   <Main>
@@ -11,6 +12,7 @@ export const App = () => (
       <SongPanel />
     </ListAndVisualizerBox>
     <PlayBar />
+    <VisualizerSelection />
   </Main>
 );
 
@@ -21,6 +23,7 @@ const Main = styled("main", {
   display: "flex",
   flexDirection: "column",
 });
+
 const ListAndVisualizerBox = styled("div", {
   flexGrow: 1,
   overflow: "hidden",
