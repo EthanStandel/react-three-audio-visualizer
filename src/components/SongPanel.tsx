@@ -1,7 +1,12 @@
 import { useEffect, useState } from "react";
 
 import { styled } from "@stitches/react";
-import { FaPlayCircle } from "react-icons/fa";
+import {
+  FaPlayCircle,
+  FaCreativeCommons,
+  FaCreativeCommonsNd,
+  FaCreativeCommonsNc,
+} from "react-icons/fa";
 import { MdClose, MdMenu } from "react-icons/md";
 
 import { useStore } from "../store";
@@ -21,7 +26,7 @@ export const SongPanel = () => {
   return (
     <>
       <SongPanelContainer hide={hide}>
-        {songs.map(({ artist, song }, index) => (
+        {songs.map(({ artist, song, license }, index) => (
           <ListItem
             key={artist + song}
             onClick={() => setCurrentSongIndex(index)}
@@ -31,6 +36,11 @@ export const SongPanel = () => {
             <span>
               {artist} - {song}
             </span>
+            <LicenseLink aria-label="license" href={license}>
+              <FaCreativeCommons />
+              <FaCreativeCommonsNd aria-label="non derivative" />
+              <FaCreativeCommonsNc aria-label="non commercial" />
+            </LicenseLink>
           </ListItem>
         ))}
       </SongPanelContainer>
@@ -98,4 +108,10 @@ const ListItem = styled("button", {
       },
     },
   },
+});
+
+const LicenseLink = styled("a", {
+  color: "var(--plt-txt)",
+  display: "inline-flex",
+  gap: ".5em",
 });

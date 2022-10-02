@@ -3,6 +3,7 @@ export type Song = {
   artist: string;
   song: string;
   source: string;
+  license: string;
 };
 
 export type SongList = {

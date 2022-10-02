@@ -1,7 +1,6 @@
-import React, { FC, useRef } from "react";
+import React from "react";
 
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
-import { Canvas, MeshProps, ThreeElements, useFrame } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import { styled } from "@stitches/react";
 
 import { Store, useStore } from "../store";

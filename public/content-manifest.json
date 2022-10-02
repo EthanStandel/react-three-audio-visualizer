@@ -4,19 +4,22 @@
       "uri": "/Eve_by_mindthings.mp3",
       "artist": "mindthings",
       "song": "Eve",
-      "source": "https://freemusicarchive.org/music/mindthings/Shared_Loneliness/02_-_mindthings_-_Eve/"
+      "source": "https://freemusicarchive.org/music/mindthings/Shared_Loneliness/02_-_mindthings_-_Eve/",
+      "license": "https://creativecommons.org/licenses/by-nc-nd/3.0/"
     },
     {
       "uri": "/Contact_by_mindthings.mp3",
       "artist": "mindthings",
       "song": "Contact",
-      "source": "https://freemusicarchive.org/music/mindthings/Shared_Loneliness/03_-_mindthings_-_Contact/"
+      "source": "https://freemusicarchive.org/music/mindthings/Shared_Loneliness/03_-_mindthings_-_Contact/",
+      "license": "https://creativecommons.org/licenses/by-nc-nd/3.0/"
     },
     {
       "uri": "/Siam_Soul_by_Jari_Pitkanen.mp3",
       "artist": "Jari Pitkanen",
       "song": "Siam Soul",
-      "source": "https://freemusicarchive.org/music/Jari_Pitkanen/Siam_Soul/05_jari_pitkanen_-_siam_soul/"
+      "source": "https://freemusicarchive.org/music/Jari_Pitkanen/Siam_Soul/05_jari_pitkanen_-_siam_soul/",
+      "license": "https://creativecommons.org/licenses/by-nc-sa/3.0/"
     }
   ]
 }
