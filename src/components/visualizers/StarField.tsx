@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useRef } from "react";
 
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { MeshProps, ThreeElements, useFrame } from "@react-three/fiber";

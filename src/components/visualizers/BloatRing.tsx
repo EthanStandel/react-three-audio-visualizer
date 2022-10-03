@@ -1,6 +1,6 @@
 import { FC, useRef } from "react";
 
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { MeshProps, ThreeElements, useFrame } from "@react-three/fiber";
 
 import { useStore } from "../../store";
@@ -15,8 +15,8 @@ export const BloatRing = () => {
 
   return (
     <>
-      {/*@ts-ignore*/}
-      <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={60} />
+      {/* @ts-ignore */}
+      <PerspectiveCamera makeDefault position={[0, 0, -400]} zoom={40} />
       <OrbitControls autoRotate={true} autoRotateSpeed={5} />
       <ambientLight />
       {Array.from({ length: 255 }).map((_, index) => (
