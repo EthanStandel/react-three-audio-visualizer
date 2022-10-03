@@ -7,10 +7,12 @@ import { Store, useStore } from "../store";
 
 import { BloatRing } from "./visualizers/BloatRing";
 import { ExpansionRing } from "./visualizers/ExpansionRing";
+import { StarField } from "./visualizers/StarField";
 
 const visualizers: Record<Store["visualizer"], React.FC> = {
   "expansion-ring": ExpansionRing,
   "bloat-ring": BloatRing,
+  "star-field": StarField,
 };
 
 export const VisualOutput = () => {

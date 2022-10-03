@@ -9,7 +9,7 @@ export type Store = {
   fetchSongs: () => Promise<void>;
   setCurrentSongIndex: (index: number) => void;
   setPlaying: (playing: boolean) => void;
-  visualizer: "expansion-ring" | "bloat-ring";
+  visualizer: "expansion-ring" | "bloat-ring" | "star-field";
   setVisualizer: (visualizer: Store["visualizer"]) => void;
   audio?: {
     context: AudioContext;

@@ -20,6 +20,7 @@ export const VisualizerSelection = () => {
       >
         <option value="expansion-ring">Expansion ring</option>
         <option value="bloat-ring">Bloat ring</option>
+        <option value="star-field">Star field</option>
       </Select>
     </VisualizerSelectionContainer>
   );

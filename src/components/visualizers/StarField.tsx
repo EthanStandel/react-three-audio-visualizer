@@ -1,32 +1,41 @@
-import { FC, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 
-import { OrbitControls, OrthographicCamera } from "@react-three/drei";
+import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { MeshProps, ThreeElements, useFrame } from "@react-three/fiber";
 
 import { useStore } from "../../store";
 
-export const BloatRing = () => {
+export const StarField = () => {
   const audio = useStore(store => store.audio);
   useFrame(() => {
     if (audio) {
       audio.analyzer.getByteFrequencyData(audio.frequencyDataBuffer);
     }
   });
+  const ref = useRef();
+  useEffect(() => {
+    console.log(ref);
+  }, []);
 
   return (
     <>
       {/*@ts-ignore*/}
-      <OrthographicCamera makeDefault position={[0, 0, 10]} zoom={60} />
-      <OrbitControls autoRotate={true} autoRotateSpeed={5} />
+      <PerspectiveCamera
+        ref={ref}
+        makeDefault
+        position={[1000, 1000, 1000]}
+        zoom={100}
+      />
+      <OrbitControls />
       <ambientLight />
-      {Array.from({ length: 255 }).map((_, index) => (
+      {Array.from({ length: 512 }).map((_, index) => (
         <PointBall
           key={index}
           index={index}
           position={[
-            2 * Math.cos((2 * Math.PI * (index + 255 * 0.25)) / 255),
-            2 * Math.sin((2 * Math.PI * (index + 255 * 0.25)) / 255),
-            0,
+            Math.random() * 20,
+            Math.random() * 20,
+            Math.random() * 20,
           ]}
         />
       ))}
@@ -39,13 +48,20 @@ const PointBall: FC<MeshProps & { index: number }> = ({ index, ...props }) => {
   const meshRef = useRef<ThreeElements["mesh"]>(null);
   const materialRef = useRef<ThreeElements["meshStandardMaterial"]>(null);
   const initialScale = 0.025;
-
+  let test = true;
   useFrame(() => {
     const ball = meshRef.current;
     const material = materialRef.current;
     if (audio && ball && material) {
+      const repeatNote = Math.floor(index / 127);
       const intensity =
-        audio.frequencyDataBuffer[index > 127 ? Math.abs(254 - index) : index];
+        audio.frequencyDataBuffer[
+          index > 127 ? Math.abs(127 * repeatNote - index) : index
+        ];
+      if (test) {
+        console.log(index, repeatNote, Math.abs(127 * repeatNote));
+        test = false;
+      }
       ball.scale.x = initialScale + 0.0025 * intensity;
       ball.scale.y = initialScale + 0.0025 * intensity;
       ball.scale.z = initialScale + 0.0025 * intensity;
