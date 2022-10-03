@@ -12,20 +12,11 @@ export const StarField = () => {
       audio.analyzer.getByteFrequencyData(audio.frequencyDataBuffer);
     }
   });
-  const ref = useRef();
-  useEffect(() => {
-    console.log(ref);
-  }, []);
 
   return (
     <>
       {/*@ts-ignore*/}
-      <PerspectiveCamera
-        ref={ref}
-        makeDefault
-        position={[1000, 1000, 1000]}
-        zoom={100}
-      />
+      <PerspectiveCamera makeDefault position={[1000, 1000, 1000]} zoom={100} />
       <OrbitControls />
       <ambientLight />
       {Array.from({ length: 512 }).map((_, index) => (
@@ -48,7 +39,6 @@ const PointBall: FC<MeshProps & { index: number }> = ({ index, ...props }) => {
   const meshRef = useRef<ThreeElements["mesh"]>(null);
   const materialRef = useRef<ThreeElements["meshStandardMaterial"]>(null);
   const initialScale = 0.025;
-  let test = true;
   useFrame(() => {
     const ball = meshRef.current;
     const material = materialRef.current;
@@ -58,10 +48,6 @@ const PointBall: FC<MeshProps & { index: number }> = ({ index, ...props }) => {
         audio.frequencyDataBuffer[
           index > 127 ? Math.abs(127 * repeatNote - index) : index
         ];
-      if (test) {
-        console.log(index, repeatNote, Math.abs(127 * repeatNote));
-        test = false;
-      }
       ball.scale.x = initialScale + 0.0025 * intensity;
       ball.scale.y = initialScale + 0.0025 * intensity;
       ball.scale.z = initialScale + 0.0025 * intensity;
