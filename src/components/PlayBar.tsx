@@ -5,7 +5,7 @@ import { GiNextButton, GiPreviousButton } from "react-icons/gi";
 import { GoMarkGithub } from "react-icons/go";
 
 import { useAnimationFrame } from "../hooks/useAnimationFrame";
-import { useStore } from "../store";
+import { store } from "../store";
 import { styled } from "../style";
 
 import { IconButton } from "./IconButton";
@@ -24,22 +24,15 @@ export const PlayBar = () => {
   const audioRef = useRef<HTMLAudioElement>(null);
   const [duration, setDuration] = useState("--:--");
   const [place, setPlace] = useState("00:00");
-  const {
-    currentSongIndex,
-    setCurrentSongIndex,
-    songs,
-    playing,
-    setPlaying,
-    setAudio,
-    audio,
-  } = useStore();
   const song =
-    typeof currentSongIndex === "number" ? songs[currentSongIndex] : undefined;
+    typeof store.state.currentSongIndex.value === "number"
+      ? store.state.songs.value[store.state.currentSongIndex.value]
+      : undefined;
 
   useEffect(() => {
     const audioEl = audioRef.current;
     if (audioEl && song?.uri) {
-      if (!audio) {
+      if (!store.state.audio.peek()()) {
         const context = new AudioContext();
         const source = context.createMediaElementSource(audioEl);
         const analyzer = context.createAnalyser();
@@ -47,7 +40,12 @@ export const PlayBar = () => {
         analyzer.fftSize = 256;
         const frequencyDataBuffer = new Uint8Array(analyzer.frequencyBinCount);
         source.connect(analyzer);
-        setAudio({ context, source, analyzer, frequencyDataBuffer });
+        store.state.audio.value = () => ({
+          context,
+          source,
+          analyzer,
+          frequencyDataBuffer,
+        });
       }
       audioEl.play();
     }
@@ -56,13 +54,13 @@ export const PlayBar = () => {
   useEffect(() => {
     const audio = audioRef.current;
     if (audio && song?.uri) {
-      if (!playing) {
+      if (!store.state.playing.value) {
         audio.pause();
       } else {
         audio.play();
       }
     }
-  }, [playing]);
+  }, [store.state.playing.value]);
 
   useAnimationFrame(() => {
     const audio = audioRef.current;
@@ -72,21 +70,24 @@ export const PlayBar = () => {
   }, []);
 
   const nextTrack = () => {
-    if (typeof currentSongIndex === "number") {
-      if (currentSongIndex < songs.length - 1) {
-        setCurrentSongIndex(currentSongIndex + 1);
+    if (typeof store.state.currentSongIndex.peek() === "number") {
+      if (
+        store.state.currentSongIndex.peek()! <
+        store.state.songs.peek().length - 1
+      ) {
+        store.setCurrentSongIndex(store.state.currentSongIndex.peek()! + 1);
       } else {
-        setCurrentSongIndex(0);
+        store.setCurrentSongIndex(0);
       }
     }
   };
 
   const prevTrack = () => {
-    if (typeof currentSongIndex === "number") {
-      if (currentSongIndex > 0) {
-        setCurrentSongIndex(currentSongIndex - 1);
+    if (typeof store.state.currentSongIndex.peek() === "number") {
+      if (store.state.currentSongIndex.peek()! > 0) {
+        store.setCurrentSongIndex(store.state.currentSongIndex.peek()! - 1);
       } else {
-        setCurrentSongIndex(songs.length - 1);
+        store.setCurrentSongIndex(store.state.songs.peek().length - 1);
       }
     }
   };
@@ -111,9 +112,15 @@ export const PlayBar = () => {
         aria-label="play / pause"
         size="big"
         disabled={!song}
-        onClick={() => setPlaying(!playing)}
+        onClick={() =>
+          (store.state.playing.value = !store.state.playing.peek())
+        }
       >
-        {playing ? <FaPause size={24} /> : <FaPlay size={24} />}
+        {store.state.playing.value ? (
+          <FaPause size={24} />
+        ) : (
+          <FaPlay size={24} />
+        )}
       </IconButton>
       <IconButton
         disabled={!song}
@@ -131,8 +138,12 @@ export const PlayBar = () => {
       </Title>
       <audio
         ref={audioRef}
-        onPause={event => setPlaying(!event.currentTarget.paused)}
-        onPlay={event => setPlaying(!event.currentTarget.paused)}
+        onPause={event =>
+          (store.state.playing.value = !event.currentTarget.paused)
+        }
+        onPlay={event =>
+          (store.state.playing.value = !event.currentTarget.paused)
+        }
         onDurationChange={event => {
           const duration = event.currentTarget.duration;
           const minutes = Math.floor(duration / 60);

@@ -9,28 +9,27 @@ import {
 } from "react-icons/fa";
 import { MdClose, MdMenu } from "react-icons/md";
 
-import { useStore } from "../store";
+import { store } from "../store";
 
 import { IconButton } from "./IconButton";
 
 export const SongPanel = () => {
   const [hide, setHide] = useState(false);
-  const { songs, setCurrentSongIndex, currentSongIndex } = useStore();
 
   useEffect(() => {
-    if (typeof currentSongIndex === "number") {
+    if (typeof store.state.currentSongIndex.peek() === "number") {
       setHide(true);
     }
-  }, [currentSongIndex]);
+  }, [store.state.currentSongIndex.value]);
 
   return (
     <>
       <SongPanelContainer hide={hide}>
-        {songs.map(({ artist, song, license }, index) => (
+        {store.state.songs.value.map(({ artist, song, license }, index) => (
           <ListItem
             key={artist + song}
-            onClick={() => setCurrentSongIndex(index)}
-            selected={currentSongIndex === index}
+            onClick={() => store.setCurrentSongIndex(index)}
+            selected={store.state.currentSongIndex.value === index}
           >
             <FaPlayCircle />
             <span>
