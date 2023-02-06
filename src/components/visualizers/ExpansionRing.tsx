@@ -3,10 +3,10 @@ import { FC, useRef } from "react";
 import { OrbitControls, PerspectiveCamera } from "@react-three/drei";
 import { MeshProps, ThreeElements, useFrame } from "@react-three/fiber";
 
-import { useStore } from "../../store";
+import { store } from "../../store";
 
 export const ExpansionRing = () => {
-  const audio = useStore(store => store.audio);
+  const audio = store.state.audio.value();
   useFrame(() => {
     if (audio) {
       audio.analyzer.getByteFrequencyData(audio.frequencyDataBuffer);
@@ -35,7 +35,7 @@ export const ExpansionRing = () => {
 };
 
 const PointBall: FC<MeshProps & { index: number }> = ({ index, ...props }) => {
-  const audio = useStore(store => store.audio);
+  const audio = store.state.audio.value();
   const meshRef = useRef<ThreeElements["mesh"]>(null);
   const materialRef = useRef<ThreeElements["meshStandardMaterial"]>(null);
   const [x, y] = props.position;
