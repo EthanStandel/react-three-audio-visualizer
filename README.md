@@ -1,4 +1,4 @@
-# [react-three-audio-visualizer (audio.standel.io)](https://audio.standel.io/)
+# react-three-audio-visualizer audio.standel.io, no longer deployed due to bandwidth risks
 
 An audio visualizer using `@react-three/fiber` with a full music player wrapping.
 
